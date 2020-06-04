@@ -15,5 +15,5 @@ client.on('message', (message: Message) =>
 
     let args = message.content.substring(prefix.length).split(' ');
 
-    commandRun(args[0], message);
+    commandRun(args[0], message, args);
 })

@@ -9,6 +9,7 @@ export const client = new discord.Client();
 export const prefix: string = configs['prefix'];
 export const commands: Map<string, Command> = new Map();
 
+
 //command handler
 interface Command 
 {
@@ -17,17 +18,20 @@ interface Command
 }
 
 const commandFiles = fs.readdirSync(__dirname + '/commands').filter(file => file.endsWith('.js'));
-for (const file of commandFiles)
+for (let file of commandFiles)
 {
   let command: Command = require(`./commands/${file}`);
   commands.set(command.name, command);
 }
 
 //commandRunner
-export function commandRun(commandName: string, message?: Message): void
+export function commandRun(commandName: string, message?: Message, args?: String[]): void
 {
   console.log(commandName);
-  if (message)
+  if (message && args)
+  {
+    commands.get(commandName).run(message, args);
+  } else if (message)
   {
     commands.get(commandName).run(message);
   } else commands.get(commandName).run();
@@ -35,7 +39,7 @@ export function commandRun(commandName: string, message?: Message): void
 
 //event handler
 const eventFiles = fs.readdirSync(__dirname + '/events').filter(file => file.endsWith('.js'));
-for (const file of eventFiles)
+for (let file of eventFiles)
 {
   require(`./events/${file}`)
 }
