@@ -23,6 +23,16 @@ for (const file of commandFiles)
   commands.set(command.name, command);
 }
 
+//commandRunner
+export function commandRun(commandName: string, message?: Message): void
+{
+  console.log(commandName);
+  if (message)
+  {
+    commands.get(commandName).run(message);
+  } else commands.get(commandName).run();
+}
+
 //event handler
 const eventFiles = fs.readdirSync(__dirname + '/events').filter(file => file.endsWith('.js'));
 for (const file of eventFiles)

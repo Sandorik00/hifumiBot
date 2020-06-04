@@ -1,19 +1,19 @@
 import {Message} from 'discord.js'
-import {
+import
+{
     client, 
     prefix,
-    commands
+    commandRun
 } from '../main'
 
 client.on('message', (message: Message) =>
 {
-    let args = message.content.substring(prefix.length).split(' ')
-
-    switch (args[0]) {
-
-        case 'sojiro':
-          commands.get('sojiro').run(message, args);
-            
-        break;
+    if (!message.content.startsWith(prefix) || message.author.bot)
+    {
+        return;
     }
+
+    let args = message.content.substring(prefix.length).split(' ');
+
+    commandRun(args[0], message);
 })
