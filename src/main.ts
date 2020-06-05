@@ -7,7 +7,16 @@ const configs: object = JSON.parse(configFile);
 
 export const client = new discord.Client();
 export const prefix: string = configs['prefix'];
+export const ownerID: string = configs['ownerID'];
 export const commands: Map<string, Command> = new Map();
+
+//clean function
+export function clean(text: string) {
+  if (typeof(text) === "string")
+    return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
+  else
+      return text;
+}
 
 
 //command handler
@@ -25,7 +34,7 @@ for (let file of commandFiles)
 }
 
 //commandRunner
-export function commandRun(commandName: string, message?: Message, args?: String[]): void
+export function commandRun(commandName: string, message?: Message, args?: string[]): void
 {
   console.log(commandName);
   if (message && args)

@@ -8,8 +8,10 @@ firebaseAdmin.initializeApp({
 
 const fr = firebaseAdmin.firestore();
 
-export async function readCollection(collectionName: string)
+export async function readCollection(collectionName: string): Promise<Array<object>>
 {
+  let docs: Array<object> = new Array();
+
   await fr
     .collection(collectionName)
     .orderBy("timestamp")
@@ -22,6 +24,9 @@ export async function readCollection(collectionName: string)
 
       snapshot.forEach((doc) => {
         console.log(doc.id, "=>", doc.data());
+        docs.push(doc.data());
       });
     });
+
+    return docs;
 }
