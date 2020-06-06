@@ -1,5 +1,5 @@
 import * as discord from 'discord.js';
-import {Client, RichEmbed, Attachment, Message} from 'discord.js';
+import {Client, MessageEmbed, MessageAttachment, Message} from 'discord.js';
 import * as fs from 'fs';
 
 const configFile: string = fs.readFileSync('./secrets/bot_config.json', 'utf8');
@@ -52,6 +52,7 @@ for (let file of eventFiles)
 {
   require(`./events/${file}`)
 }
+
 
 
 client.login(configs['bot-token']);

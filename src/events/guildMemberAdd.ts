@@ -6,12 +6,7 @@ import
     commandRun
 } from '../main'
 
-class sUser extends GuildMember
-{
-          from: string;
-}
-
-client.on('guildMemberAdd', (member: sUser) =>
+client.on('guildMemberAdd', (member: GuildMember) =>
 {
           console.log(member);
 })

@@ -1,4 +1,8 @@
-import { ownerID, clean, client } from "../main";
+import * as discord from 'discord.js';
+import * as firebase from "../modules/firebase";
+import { ownerID, clean, client, commands } from "../main";
+
+const db = firebase;
 
 module.exports = {
   name: "eval",

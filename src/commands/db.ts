@@ -18,7 +18,7 @@ module.exports =
         }
         message.channel.send(info.join("\n"));
       }
-      
+
       console.log(doc);
     });
   },
