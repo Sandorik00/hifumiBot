@@ -1,6 +1,7 @@
 import * as discord from 'discord.js';
 import * as firebase from "../modules/firebase";
-import { ownerID, clean, client, commands } from "../main";
+import { inspect } from "util";
+import { ownerID, clean} from "../main";
 
 const db = firebase;
 
@@ -9,7 +10,7 @@ module.exports = {
   async run(message, args) {
     if (message.author.id !== ownerID) {
       message.channel.send(
-        "*eval* - очень опасная комманда, так что никому низя."
+        "**eval** - очень опасная комманда, так что никому низя."
       );
       return;
     }
@@ -19,9 +20,9 @@ module.exports = {
       const code = args.join(" ");
       let evaled = eval(code);
 
-      if (typeof evaled !== "string") evaled = require("util").inspect(evaled);
+      if (typeof evaled !== "string") evaled = inspect(evaled);
 
-      message.channel.send(clean(evaled), { code: "xl" });
+      message.channel.send(clean(evaled), { code: "js" });
     } catch (err) {
       message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
     }

@@ -5,10 +5,12 @@ import * as fs from 'fs';
 const configFile: string = fs.readFileSync('./secrets/bot_config.json', 'utf8');
 const configs: object = JSON.parse(configFile);
 
+
 export const client = new discord.Client();
 export const prefix: string = configs['prefix'];
 export const ownerID: string = configs['ownerID'];
 export const commands: Map<string, Command> = new Map();
+export const dataObj = {};
 
 //clean function
 export function clean(text: string) {
@@ -44,6 +46,15 @@ export function commandRun(commandName: string, message?: Message, args?: string
   {
     commands.get(commandName).run(message);
   } else commands.get(commandName).run();
+}
+
+//data handler
+const dataFiles = fs.readdirSync('./data').filter(file => file.endsWith('.json'));
+for (let file of dataFiles)
+{
+  let tmpData = fs.readFileSync(`./data/${file}`, 'utf8');
+  let fn = file.replace(/\.[^/.]+$/, "");
+  dataObj[fn] = JSON.parse(tmpData);
 }
 
 //event handler

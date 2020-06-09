@@ -1,4 +1,5 @@
 import * as firebaseAdmin from "firebase-admin";
+import { GuildMember } from "discord.js";
 const serviceAccount = require("../../secrets/firebase.json");
 
 firebaseAdmin.initializeApp({
@@ -7,6 +8,8 @@ firebaseAdmin.initializeApp({
 });
 
 const fr = firebaseAdmin.firestore();
+
+export const FieldValue = firebaseAdmin.firestore.FieldValue;
 
 export async function readCollection(collectionName: string): Promise<Array<object>>
 {
@@ -29,4 +32,9 @@ export async function readCollection(collectionName: string): Promise<Array<obje
     });
 
     return docs;
+}
+
+export async function writeToCollection(collectionName: string, newData: unknown)
+{
+  fr.collection(collectionName).add(newData);
 }
