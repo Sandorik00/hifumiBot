@@ -1,9 +1,32 @@
 import * as discord from 'discord.js';
 import * as firebase from "../modules/firebase";
 import { inspect } from "util";
-import { ownerID, clean} from "../main";
+import { ownerID, clean, lots_of_messages_getter } from "../main";
+import * as fs from 'fs';
 
+const fss = fs;
 const db = firebase;
+/* async function gievMessages(channel, limit) {
+  const sum_messages = [];
+  let last_id;
+
+  while (true) {
+      const options = { limit: 100 };
+      if (last_id) {
+          options['before'] = last_id;
+      }
+
+      const messages = await channel.messages.fetch(options);
+      sum_messages.push(...messages.array());
+      last_id = messages.last().id;
+
+      if (messages.size != 100 || sum_messages.length >= limit) {
+          break;
+      }
+  }
+
+  return sum_messages;
+} */
 
 module.exports = {
   name: "eval",

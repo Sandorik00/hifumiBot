@@ -26,7 +26,7 @@ export async function readCollection(collectionName: string): Promise<Array<obje
       }
 
       snapshot.forEach((doc) => {
-        console.log(doc.id, "=>", doc.data());
+        //console.log(doc.id, "=>", doc.data());
         docs.push(doc.data());
       });
     });

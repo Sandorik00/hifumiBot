@@ -1,6 +1,7 @@
 import {dataObj} from './main';
 import * as fr from './modules/firebase'
 import * as discord from "discord.js";
+import { time } from 'console';
 
 //util functions
 export async function getReferalInvites(guild: discord.Guild): Promise<object>
@@ -23,7 +24,7 @@ export async function getInvitesData()
 
 export async function fromCheck(newStats: object, oldStats: object): Promise<string>
 {
-          let from = 'из далёких земель';
+          let from = 'инвайтом нифига не инвайтом а тупой командой через эвал дебил';
           for (let key in newStats) {
                     if (key in oldStats)
                     {
@@ -54,6 +55,23 @@ export class MemberData
                     this.date = `${new Date().toLocaleString("ru-RU")}`;
                     this.InviteStats = invStats;
                     this.bot = false;
-                    this.timestamp = fr.FieldValue.serverTimestamp();
+                    this.timestamp = 'time';
+          }
+
+          
+
+          toJSON()
+          {
+            let data = {};
+            let keys = Object.keys(this);
+            keys.forEach(e => {
+              if (e === 'timestamp')
+              {
+                data[e] = fr.FieldValue.serverTimestamp();
+                return;
+              }
+              data[e] = JSON.parse(JSON.stringify(this[e]));
+            });
+            return data;
           }
 }
