@@ -41,6 +41,7 @@ module.exports = {
     console.log(sum_messages);
 
     message.channel.bulkDelete(sum_messages);
+    await message.delete();
     //message.channel.send("Ну вот, теперь в канале чистенько.");
   },
 };
