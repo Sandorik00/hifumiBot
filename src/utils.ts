@@ -24,7 +24,7 @@ export async function getInvitesData()
 
 export async function fromCheck(newStats: object, oldStats: object): Promise<string>
 {
-          let from = 'инвайтом нифига не инвайтом а тупой командой через эвал дебил';
+          let from = 'одноразовым';
           for (let key in newStats) {
                     if (key in oldStats)
                     {

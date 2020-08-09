@@ -45,6 +45,9 @@ module.exports = {
 
       if (typeof evaled !== "string") evaled = inspect(evaled);
 
+      
+      evaled = evaled.slice(0, 1900);
+
       message.channel.send(clean(evaled), { code: "js" });
     } catch (err) {
       message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
