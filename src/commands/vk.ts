@@ -44,13 +44,12 @@ module.exports = {
          }
        
          let escortMessage = "Новости!!";
-         //let pingMessage = "@everyone" + " " + escortMessage;
+         let pingMessage = "@everyone" + " " + escortMessage;
   
         //let postAttachment = new Attachment(`${postAttachmentPhoto}`);
         await message.delete();
 
-        //newsCh.send(embed);
   
-        NewsChannel.send(embed);
+        NewsChannel.send(pingMessage, embed);
   }
 };
