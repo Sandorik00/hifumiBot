@@ -30,7 +30,7 @@ module.exports = {
         console.log(sum_messages);
       }
 
-      if (messages.size != 100 || sum_messages.length >= args[1]) {
+      if (sum_messages.length >= 1000 || messages.size != 100 || sum_messages.length >= args[1]) {
         break;
       }
     }
@@ -38,10 +38,26 @@ module.exports = {
     if (sum_messages.length > args[1]) {
       sum_messages = sum_messages.slice(0, args[1]);
     }
-    console.log(sum_messages);
 
-    message.channel.bulkDelete(sum_messages);
+    let filter = (reaction, user) => user.id === message.author.id;
+
+    let confirmMessage = await message.reply(sum_messages[sum_messages.length - 1]["url"]);
+
+    await confirmMessage.react('✅');
+    await confirmMessage.react('❌');
+
+    let collector = confirmMessage.createReactionCollector(filter, { time: 120000, dispose: true });
+    let action = async reaction => {
+      collector.stop();
+      if(reaction.emoji.name == '✅') {
+        message.channel.bulkDelete(sum_messages);
+      }
+
+      await confirmMessage.delete();
+    }
+
+    collector.on('collect', action);
+
     await message.delete();
-    //message.channel.send("Ну вот, теперь в канале чистенько.");
   },
 };
