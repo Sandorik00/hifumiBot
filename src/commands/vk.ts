@@ -8,7 +8,7 @@ module.exports = {
       message.channel.send("アクセスが拒否されました");
       return;
     }
-    const NewsChannel: TextChannel = message.guild.channels.cache.find(ch => ch.id === '674679001582665728') as TextChannel;
+    const NewsChannel: TextChannel = message.guild.channels.cache.find(ch => ch.id === '683018619118157923') as TextChannel;
     if (!NewsChannel) return;
     //hardcoded now but will be rewrited later
 
