@@ -58,6 +58,10 @@ module.exports = {
 
     collector.on('collect', action);
 
+    collector.on('end', async collected => {
+      await confirmMessage.delete();
+  })
+
     await message.delete();
   },
 };
