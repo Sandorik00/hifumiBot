@@ -22,7 +22,7 @@ client.on('guildMemberAdd', async (member: GuildMember) =>
     if (member.user.bot)
     {
         memData.bot = true;
-        (HelloChannel as TextChannel).send(`Ну бот и бот ¯\_(ツ)_/¯. Заходи ${member}`);
+        (HelloChannel as TextChannel).send(`Ну бот и бот ¯\\\\\\_(ツ)\\_/¯. Заходи ${member}`);
     } else
     {
         (HelloChannel as TextChannel).send("Привет " + `${member}!! ` + `Судя по моим записям ты воспользовался **${from}** инвайтом.`);
