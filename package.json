@@ -3,9 +3,6 @@
   "version": "0.1.0",
   "description": "HifumiBot writed on ts",
   "main": "./dist/main.js",
-  "scripts": {
-    "test": "console.log(123)"
-  },
   "author": "Sandorik00",
   "dependencies": {
     "discord.js": "12.2.0",
