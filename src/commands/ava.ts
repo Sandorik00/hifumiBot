@@ -71,7 +71,7 @@ module.exports = {
   },
 };
 
-/* alternative node-fetch by id implementation 
+/* alternative node-fetch by id implementation with not actual token of course
 let userById;
             const url = `https://discordapp.com/api/users/${arg}`;
             const headers = {
