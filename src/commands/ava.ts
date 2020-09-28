@@ -1,5 +1,6 @@
 import { client } from "../main";
 import { User, ImageURLOptions, Message } from "discord.js";
+import fetch from "node-fetch";
 
 module.exports = {
   name: "ava",
@@ -7,7 +8,7 @@ module.exports = {
     let imageOptions: ImageURLOptions = { format: "png", size: 4096 };
     let allInOneArgs: String = args.join(" ");
     let generalArg = allInOneArgs.substring(args[0].length + 1);
-          let avatar: String;
+    let avatar: String;
     if (!args[1]) {
       avatar = message.author.avatarURL(imageOptions);
     } else {
@@ -19,13 +20,17 @@ module.exports = {
               args[1].match(/<@!(\d*)>/)[1]
             )) as User;
             avatar = user.avatarURL(imageOptions);
-            if (avatar == undefined) {avatar = user.defaultAvatarURL}
+            if (avatar == undefined) {
+              avatar = user.defaultAvatarURL;
+            }
             break;
 
           case /\d+/.test(arg):
-            let userById = (await client.users.fetch(arg)) as User;
+            let userById = (await client.users.fetch(arg, false, true)) as User;
             avatar = userById.avatarURL(imageOptions);
-            if (avatar == undefined) {avatar = userById.defaultAvatarURL}
+            if (avatar == undefined) {
+              avatar = userById.defaultAvatarURL;
+            }
             break;
 
           default:
@@ -49,7 +54,9 @@ module.exports = {
               message.channel.send("Не знаю никого с таким именем.");
             } else {
               avatar = userByNick.avatarURL(imageOptions);
-              if (avatar == undefined) {avatar = userByNick.defaultAvatarURL}
+              if (avatar == undefined) {
+                avatar = userByNick.defaultAvatarURL;
+              }
             }
             break;
         }
@@ -63,3 +70,21 @@ module.exports = {
     message.channel.send(avatar);
   },
 };
+
+/* alternative node-fetch by id implementation 
+let userById;
+            const url = `https://discordapp.com/api/users/${arg}`;
+            const headers = {
+              "Content-Type": "application/json",
+              "Authorization": "Bot NjUyODQxNTg1NTkwOTI3Mzkw.XeuUGw.cjHtR4VVVZER6uQlmtZKKzukYqY",
+            };
+
+             await fetch(url, { method: "GET", headers: headers })
+              .then((res) => {
+                return res.json();
+              })
+              .then((json) => {
+                userById = json;
+                console.log(json);
+              });
+              avatar = `https://cdn.discordapp.com/avatars/${userById.id}/${userById.avatar}.png?size=4096`;  */
