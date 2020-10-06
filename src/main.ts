@@ -1,4 +1,5 @@
 import * as discord from "discord.js";
+import { Util } from "discord.js";
 import { Client, MessageEmbed, MessageAttachment, Message } from "discord.js";
 import * as fs from "fs";
 

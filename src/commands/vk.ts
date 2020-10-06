@@ -49,7 +49,10 @@ module.exports = {
         //let postAttachment = new Attachment(`${postAttachmentPhoto}`);
         await message.delete();
 
-  
-        NewsChannel.send(pingMessage, embed);
+        if(!args[1]) {
+          NewsChannel.send(pingMessage, embed);
+        } else {
+          NewsChannel.send(escortMessage, embed);
+        }
   }
 };
