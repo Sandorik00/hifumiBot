@@ -4,6 +4,12 @@
   "description": "HifumiBot writed on ts",
   "main": "./dist/main.js",
   "author": "Sandorik00",
+  "scripts": {
+    "clean": "rm -r ./dist",
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "start": "$NODE ./dist/main.js"
+  },
   "dependencies": {
     "@types/node-fetch": "^2.5.7",
     "discord.js": "12.3.1",
