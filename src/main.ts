@@ -8,7 +8,7 @@ const configs: object = JSON.parse(configFile);
 
 export const client = new discord.Client();
 export const prefix: string = configs["prefix"];
-export const ownerID: string = configs["ownerID"];
+export const ownerIDs: Set<string> = new Set(configs["ownerIDs"]);
 export const commands: Map<string, Command> = new Map();
 export const dataObj = {};
 
