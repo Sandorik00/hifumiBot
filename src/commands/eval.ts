@@ -1,11 +1,9 @@
-import * as discord from 'discord.js';
+import * as discord from "discord.js";
 import * as firebase from "../modules/firebase";
 import { inspect } from "util";
 import { ownerIDs, clean } from "../main";
-import * as fs from 'fs';
-
-const fss = fs;
-const db = firebase;
+import * as fs from "fs";
+import { sandboxedEval } from "../eval-sandbox";
 
 module.exports = {
   name: "eval",
@@ -20,10 +18,11 @@ module.exports = {
     try {
       args.shift();
       const code = args.join(" ");
-      let evaled = await eval(`(async ()=> {${code}})()`);
+      let evaled = await sandboxedEval(
+        `(async(fs, db, discord, client, message) => {${code}})`
+      )(fs, firebase, discord, message.client, message);
 
       if (typeof evaled !== "string") evaled = inspect(evaled);
-
 
       evaled = evaled.slice(0, 1900);
 
