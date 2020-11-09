@@ -17,8 +17,7 @@ module.exports = {
       size: 4096,
       dynamic: true,
     };
-    let allInOneArgs: string = args.join(" ");
-    let generalArg = allInOneArgs.substring(args[0].length + 1);
+    let generalArg = args.join(" ").substring(args[0].length + 1).trim();
     let avatar: string;
     let user: User;
     if (!args[1]) {
@@ -45,7 +44,7 @@ module.exports = {
               ) ?? null;
 
             user =
-              user != null
+              tempMem !== null
                 ? tempMem.user
                 : allMembers.find((mem) => mem.nickname === generalArg).user;
 
