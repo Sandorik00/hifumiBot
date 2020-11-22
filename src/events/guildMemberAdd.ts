@@ -4,12 +4,13 @@ import { GuildMember, GuildChannel, TextChannel } from "discord.js";
 import { client, prefix, commandRun } from "../main";
 
 const forParadox = [
-  "Если ещё раз выйдешь то бан!!",
-  "Ты совсем дурачок или как?",
-  "Слушай, ну хватит уже...",
-  "Даже если ты не Парадокс, то всё равно бан.",
-  "Sandorik, да вломи ты ему наконец!!",
-  "Ты глупый или что-то?",
+  "если ещё раз выйдешь то бан!!",
+  "ты совсем дурачок или как?",
+  "слушай, ну хватит уже...",
+  "даже если ты не Парадокс, то всё равно бан.",
+  "ты глупый или что-то?",
+  "ты совсем идиот всё таки.",
+  "нет такой комманды, дурачок.",
 ];
 
 client.on("guildMemberAdd", async (member: GuildMember) => {
@@ -27,6 +28,7 @@ client.on("guildMemberAdd", async (member: GuildMember) => {
   if (member.id === "641366682761166860") {
     member.roles.add("751923183384264725");
     (HelloChannel as TextChannel).send(
+      `${member}, ` + 
       forParadox[Math.floor(Math.random() * forParadox.length)]
     );
   } else if (member.user.bot) {
