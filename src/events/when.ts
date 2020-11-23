@@ -1,43 +1,19 @@
 import { Message } from 'discord.js';
 import { client } from '../main';
 
-const ALPHABET = new Set(
- 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюяwhen'
-);
-
-const whenSet = new Set(['when', 'вен', 'вэн', 'когда', 'когда-же']);
-
 client.on('message', (message: Message) => {
- if (message.author.id === '652841585590927390') return;
+    if (message.author.id === '652841585590927390') return;
 
- let str = message.content.trim().toLowerCase();
- let currentWord = '';
- let words: string[] = [];
+    let re = new RegExp('\\S?(?:^|\\s+)(?:когда|when|вен)[\\s*?.!)]+', 'i');
+    console.log(re);
+    console.log(re.test(message.content.trim()));
 
- for (let i = 0, len = str.length; i < len; i++) {
-  let c = str[i];
-  if (ALPHABET.has(c)) {
-   currentWord += c;
-  } else {
-   words.push(currentWord);
-   currentWord = '';
-  }
- }
-
- if (currentWord.length > 0) {
-  words.push(currentWord);
- }
-
- console.log(whenSet);
-
- console.log(words);
-
- for (const when of words) {
-  console.log(when);
-
-  if (whenSet.has(when)) {
-   message.channel.send('Тогда, когда сделаешь это самостоятельно!!');
-   return;
-  }
- }
+    if (re.test(message.content.trim())) {
+        let rand = Math.random();
+        if (rand >= 0 && rand < 0.15) {
+            message.channel.send('Тогда, когда сделаешь это самостоятельно!!');
+        } else if (rand >= 0.15 && rand < 0.3) {
+            message.channel.send('Никогда <:trololo:737998761262841948>');
+        }
+    }
 });
