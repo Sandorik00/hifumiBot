@@ -5,8 +5,6 @@ client.on('message', (message: Message) => {
     if (message.author.id === '652841585590927390') return;
 
     let re = new RegExp('\\S?(?:^|\\s+)(?:когда|when|вен)[\\s*?.!)]+', 'i');
-    console.log(re);
-    console.log(re.test(message.content.trim()));
 
     if (re.test(message.content.trim())) {
         let rand = Math.random();
