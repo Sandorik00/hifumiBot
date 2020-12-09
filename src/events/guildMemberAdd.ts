@@ -19,8 +19,15 @@ client.on('guildMemberAdd', async (member: GuildMember) => {
     );
     if (!HelloChannel) return;
 
+    let collectionGN = '';
+    if (member.guild.id === '500980710870614019') {
+        collectionGN = 'users';
+    } else {
+        collectionGN = member.guild.id;
+    }
+
     let InviteStats = await util.getReferalInvites(member.guild);
-    let oldStats = await util.getInvitesData(member.guild.id);
+    let oldStats = await util.getInvitesData(collectionGN);
     let from: string | null = await util.fromCheck(InviteStats, oldStats);
     let memData: util.MemberData = new util.MemberData(
         member,
@@ -61,5 +68,5 @@ client.on('guildMemberAdd', async (member: GuildMember) => {
         }
     }
 
-    await fr.writeToCollection(member.guild.id, memData.toJSON());
+    await fr.writeToCollection(collectionGN, memData.toJSON());
 });
