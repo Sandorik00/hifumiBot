@@ -3,7 +3,8 @@ import
 {
     client, 
     prefix,
-    commandRun
+    commandRun,
+    settings
 } from '../main';
 
 
@@ -12,7 +13,7 @@ client.on("guildMemberRemove", async member =>
           const channel = member.guild.channels.cache.find(ch => ch.id === '674609296050487306');
           if (!channel) return;
           //will be rewrited
-          if (member.id === '364720702252908544') return;
+          if (settings.get(member.guild.id).IgnoredIDs.has(member.id)) return;
           (channel as TextChannel).send("Пользователь " + `${member.user.tag}` + " покинул сервер!");
         
 });

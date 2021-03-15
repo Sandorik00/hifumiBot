@@ -15,7 +15,7 @@ const forParadox = [
   'в этот раз тебе будет выдан бан просто потому, что ты - эвриван.',
   'я тебе не выдам роли Искателя и Гексакаста. Чтоб ты помучался.',
   'дверь вон там.',
-  '<:DogeInGlasses:815913229918273546>',
+  '<:DogeInGlasses:811992635363295243>',
   'ты забанен на три часа. Возвращайся, когда сделаешь домашку.',
 ];
 
@@ -42,7 +42,7 @@ client.on('guildMemberAdd', async (member: GuildMember) => {
     (HelloChannel as TextChannel).send(
       `${member}, ` + forParadox[Math.floor(Math.random() * forParadox.length)],
     );
-  } else if (member.id === '364720702252908544') {
+  } else if (settings.get(member.guild.id).IgnoredIDs.has(member.id)) {
   } else if (member.user.bot) {
     memData.bot = true;
     (HelloChannel as TextChannel).send(`Ну бот и бот ¯\\\\\\_(ツ)\\_/¯. Заходи ${member}`);

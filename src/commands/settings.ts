@@ -10,7 +10,7 @@ module.exports = {
             message.channel.send('アクセスが拒否されました');
             return;
         }
-        let o: GuildSettings = { HelloChID: '', NewsChID: '' };
+        let o: GuildSettings = { HelloChID: '', NewsChID: '', IgnoredIDs: new Set<string>()};
         let answer: string;
 
         switch (args[1]) {
@@ -19,6 +19,7 @@ module.exports = {
                     let options = args.slice(2);
                     o.HelloChID = options[0];
                     o.NewsChID = options[1];
+                    o.IgnoredIDs = new Set(options[2]?.split(','));
                     settings.append(message.guild.id, o);
                     answer = 'appended';
                 } else {
