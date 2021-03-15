@@ -5,7 +5,7 @@ import * as path from 'path';
 export interface GuildSettings {
   HelloChID: string;
   NewsChID: string;
-  IgnoredIDs: Set<string>;
+  IgnoredIDs: string[];
 }
 
 interface Parsed {
@@ -45,7 +45,6 @@ export class SettingsSystem {
     let m = '';
     let gs = this.content.get(guild);
     for (const key in gs) {
-      gs[key] = gs[key] instanceof Set ? Array.from(gs[key]) : gs[key];
       m += `\n${key}: ${gs[key]}`;
     }
     return m;
@@ -56,15 +55,6 @@ export class SettingsSystem {
     this.content.forEach((val, key) => {
       settingsArray.push({ Name: key, Value: val });
     });
-    fs.writeFileSync(
-      settingsFilePath,
-      JSON.stringify(settingsArray, (_k, v) => {
-        if (v instanceof Set) {
-          return Array.from(v);
-        } else {
-          return v;
-        }
-      }),
-    );
+    fs.writeFileSync(settingsFilePath, JSON.stringify(settingsArray));
   }
 }

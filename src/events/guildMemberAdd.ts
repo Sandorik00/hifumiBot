@@ -1,7 +1,10 @@
 import * as util from '../utils';
 import * as fr from '../modules/firebase';
+//import { ServerDefenceMemberEntity } from '../modules/serverDefense';
 import { GuildMember, GuildChannel, TextChannel } from 'discord.js';
 import { client, prefix, commandRun, settings, dataObj } from '../main';
+
+let islastSUS = false;
 
 const forParadox = [
   'если ещё раз выйдешь то бан!!',
@@ -20,6 +23,7 @@ const forParadox = [
 ];
 
 client.on('guildMemberAdd', async (member: GuildMember) => {
+  //let defEnt = new ServerDefenceMemberEntity(member);
   const HelloChannel: GuildChannel = member.guild.channels.cache.find(
     (ch) => ch.id === settings.get(member.guild.id).HelloChID,
   );
@@ -42,7 +46,7 @@ client.on('guildMemberAdd', async (member: GuildMember) => {
     (HelloChannel as TextChannel).send(
       `${member}, ` + forParadox[Math.floor(Math.random() * forParadox.length)],
     );
-  } else if (settings.get(member.guild.id).IgnoredIDs.has(member.id)) {
+  } else if (settings.get(member.guild.id).IgnoredIDs.find((v) => v === member.id) !== undefined) {
   } else if (member.user.bot) {
     memData.bot = true;
     (HelloChannel as TextChannel).send(`Ну бот и бот ¯\\\\\\_(ツ)\\_/¯. Заходи ${member}`);
