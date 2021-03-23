@@ -22,12 +22,29 @@ const forParadox = [
   'ты забанен на три часа. Возвращайся, когда сделаешь домашку.',
 ];
 
+let forParadoxRecent: string[] = [];
+
+function getNextGreetingForParadox(): string | null {
+  if (forParadoxRecent.length === 0) {
+    forParadoxRecent = [...forParadox];
+  }
+
+  if (forParadoxRecent.length > 0) {
+    let index = Math.floor(Math.random() * forParadoxRecent.length);
+    let greeting = forParadoxRecent[index];
+    forParadoxRecent.splice(index, 1);
+    return greeting;
+  } else {
+    return null;
+  }
+}
+
 client.on('guildMemberAdd', async (member: GuildMember) => {
   //let defEnt = new ServerDefenceMemberEntity(member);
   const HelloChannel: GuildChannel = member.guild.channels.cache.find(
     (ch) => ch.id === settings.get(member.guild.id).HelloChID,
   );
-  if (!HelloChannel) return;
+  if (!(HelloChannel instanceof TextChannel)) return;
 
   let collectionGN = '';
   if (member.guild.id === '500980710870614019') {
@@ -43,13 +60,12 @@ client.on('guildMemberAdd', async (member: GuildMember) => {
 
   if (member.id === '641366682761166860') {
     member.roles.add('751923183384264725');
-    (HelloChannel as TextChannel).send(
-      `${member}, ` + forParadox[Math.floor(Math.random() * forParadox.length)],
-    );
+    let greeting = getNextGreetingForParadox();
+    if (greeting != null) HelloChannel.send(`${member}, ` + greeting);
   } else if (settings.get(member.guild.id).IgnoredIDs.find((v) => v === member.id) !== undefined) {
   } else if (member.user.bot) {
     memData.bot = true;
-    (HelloChannel as TextChannel).send(`Ну бот и бот ¯\\\\\\_(ツ)\\_/¯. Заходи ${member}`);
+    HelloChannel.send(`Ну бот и бот ¯\\\\\\_(ツ)\\_/¯. Заходи ${member}`);
   } else {
     if (
       Object.keys(dataObj['referalInvites'][member.guild.id]).find(
@@ -57,11 +73,11 @@ client.on('guildMemberAdd', async (member: GuildMember) => {
       ) === from ||
       !from
     ) {
-      (HelloChannel as TextChannel).send(
+      HelloChannel.send(
         'Привет, ' + `${member}!! ` + `Судя по моим записям, ты воспользовался инвайтом.`,
       );
     } else {
-      (HelloChannel as TextChannel).send(
+      HelloChannel.send(
         'Привет, ' +
           `${member}!! ` +
           `Судя по моим записям, ты воспользовался инвайтом - "**${from}**".`,
