@@ -36,8 +36,8 @@ interface Command {
 
 const commandFiles = fs.readdirSync(__dirname + '/commands').filter((file) => file.endsWith('.js'));
 for (let file of commandFiles) {
-  let command: Command = require(`./commands/${file}`);
-  commands.set(command.name, command);
+  let command: Command | null | undefined = require(`./commands/${file}`);
+  if (command != null) commands.set(command.name, command);
 }
 
 //commandRunner
