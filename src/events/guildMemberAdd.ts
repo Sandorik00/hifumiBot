@@ -62,7 +62,7 @@ client.on('guildMemberAdd', async (member: GuildMember) => {
     member.roles.add('751923183384264725');
     let greeting = getNextGreetingForParadox();
     if (greeting != null) HelloChannel.send(`${member}, ` + greeting);
-  } else if (settings.get(member.guild.id).IgnoredIDs.find((v) => v === member.id) !== undefined) {
+  } else if ((settings.get(member.guild.id).IgnoredIDs ?? []).includes(member.id)) {
   } else if (member.user.bot) {
     memData.bot = true;
     HelloChannel.send(`Ну бот и бот ¯\\\\\\_(ツ)\\_/¯. Заходи ${member}`);
