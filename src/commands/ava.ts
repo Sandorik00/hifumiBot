@@ -7,7 +7,6 @@ import {
   GuildMember,
   Guild,
 } from "discord.js";
-import fetch from "node-fetch";
 
 module.exports = {
   name: "ava",
@@ -63,7 +62,7 @@ module.exports = {
         user.avatarURL(imageOptions) !== null
           ? user.avatarURL(imageOptions)
           : user.defaultAvatarURL;
-      message.channel.send(avatar);
+      message.channel.send({ files: [avatar] });
     }
   },
 };
