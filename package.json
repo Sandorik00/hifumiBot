@@ -8,7 +8,7 @@
     "clean": "rm -r ./dist",
     "build": "tsc",
     "watch": "tsc --watch",
-    "start": "$NODE ./dist/main.js"
+    "start": "node ./dist/main.js"
   },
   "dependencies": {
     "@types/node-fetch": "^2.5.7",
