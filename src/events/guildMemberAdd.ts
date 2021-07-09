@@ -49,14 +49,17 @@ client.on('guildMemberAdd', async (member: GuildMember) => {
   let collectionGN = '';
   if (member.guild.id === '500980710870614019') {
     collectionGN = 'users';
-  } else {
+  } else if (member.guild.id === '785196930523332618') {
     collectionGN = member.guild.id;
+  } else {
+    
   }
 
-  let InviteStats = await util.getReferalInvites(member.guild);
-  let oldStats = await util.getInvitesData(collectionGN);
-  let from: string | null = await util.fromCheck(InviteStats, oldStats);
-  let memData: util.MemberData = new util.MemberData(member, from, InviteStats);
+  if (collectionGN !== '') {
+    let InviteStats = await util.getReferalInvites(member.guild);
+    let oldStats = await util.getInvitesData(collectionGN);
+    let from: string | null = await util.fromCheck(InviteStats, oldStats);
+    let memData: util.MemberData = new util.MemberData(member, from, InviteStats);
 
   if (member.id === '641366682761166860') {
     member.roles.add('751923183384264725');
@@ -66,24 +69,35 @@ client.on('guildMemberAdd', async (member: GuildMember) => {
   } else if (member.user.bot) {
     memData.bot = true;
     HelloChannel.send(`Ну бот и бот ¯\\\\\\_(ツ)\\_/¯. Заходи ${member}`);
+  } else if (
+        Object.keys(dataObj['referalInvites'][member.guild.id]).find(
+          (key) => dataObj['referalInvites'][member.guild.id][key] === from,
+        ) === from ||
+        !from
+      ) {
+        (HelloChannel as TextChannel).send(
+          'Привет, ' + `${member}!! ` + `Судя по моим записям, ты воспользовался инвайтом.`,
+        );
+      } else {
+        (HelloChannel as TextChannel).send(
+          'Привет, ' +
+            `${member}!! ` +
+            `Судя по моим записям, ты воспользовался инвайтом - "**${from}**".`,
+        );
+      }
+    
+
+    await fr.writeToCollection(collectionGN, memData.toJSON());
   } else {
-    if (
-      Object.keys(dataObj['referalInvites'][member.guild.id]).find(
-        (key) => dataObj['referalInvites'][member.guild.id][key] === from,
-      ) === from ||
-      !from
-    ) {
-      HelloChannel.send(
-        'Привет, ' + `${member}!! ` + `Судя по моим записям, ты воспользовался инвайтом.`,
-      );
+    if (member.id === '641366682761166860') {
+      let greeting = getNextGreetingForParadox();
+    if (greeting != null) HelloChannel.send(`${member}, ` + greeting);
+    } else if ((settings.get(member.guild.id).IgnoredIDs ?? []).includes(member.id)) {
+    } else if (member.user.bot) {
+      (HelloChannel as TextChannel).send(`Ну бот и бот ¯\\\\\\_(ツ)\\_/¯. Заходи ${member}`);
     } else {
-      HelloChannel.send(
-        'Привет, ' +
-          `${member}!! ` +
-          `Судя по моим записям, ты воспользовался инвайтом - "**${from}**".`,
-      );
+      (HelloChannel as TextChannel).send(`${member} гусь!`);
     }
   }
 
-  await fr.writeToCollection(collectionGN, memData.toJSON());
 });
