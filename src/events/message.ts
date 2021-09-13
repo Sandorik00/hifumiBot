@@ -2,8 +2,12 @@ import { Message } from 'discord.js';
 import { client, prefix, commandRun } from '../main';
 
 client.on('message', (message: Message) => {
-  if (message.author.id === '641366682761166860' && message.content.includes('здорово')) {
+  if (
+    message.author.id === '641366682761166860' &&
+    message.content.toLowerCase().includes('здорово')
+  ) {
     message.delete();
+    return;
   }
 
   if (!message.content.startsWith(prefix) || message.author.bot) {
